@@ -2,44 +2,20 @@ import 'reflect-metadata';
 import dotenv from 'dotenv';
 import { ApolloServer, gql } from 'apollo-server';
 import mongoose from 'mongoose';
-import type { ServerConfig } from './config/server-config';
+import type { ServerConfig } from './_config/server-config';
 import { ApolloServerPluginLandingPageDisabled, ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
+import typeDefs from './graphql/schema/index';
+import resolvers from './graphql/resolvers/index';
+import MoviesType from './graphql/schema/MoviesType';
+import * as MoviesResolvers from './graphql/resolvers/moviesResolver';
 
 dotenv.config();
-
-const typeDefs = gql`
-  type Book {
-    title: String
-    author: String
-  }
-
-  type Query {
-    books: [Book]
-  } 
-`;
-
-const books = [
-  {
-    title: 'The Awakening',
-    author: 'Kate Chopin',
-  },
-  {
-    title: 'City of Glass',
-    author: 'Paul Auster',
-  },
-];
-
-const resolvers = {
-  Query: {
-    books: () => books,
-  },
-};
 
 export default async function startServer(
   config: ServerConfig,
 ): Promise<ApolloServer> {
   const server = new ApolloServer({
-    typeDefs,
+    typeDefs: MoviesType,
     resolvers,
     plugins: [
     // Install a landing page plugin based on NODE_ENV
@@ -67,4 +43,4 @@ export default async function startServer(
 
   if (config.verbose) console.log('mongodb started at uri: ', config.uri);
   return server;
-}
+};

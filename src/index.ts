@@ -1,4 +1,4 @@
-import configServer from './config/server-config';
+import configServer from './_config/server-config';
 import startServer from './server';
 import dotenv from 'dotenv';
 
