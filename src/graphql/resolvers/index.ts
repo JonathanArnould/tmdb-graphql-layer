@@ -1,9 +1,13 @@
 import { GetMovieArgs } from "../../typescript/getMovieTypes";
 import MoviesResolvers from "./moviesResolver";
 
+type Args = {
+    args: GetMovieArgs
+}
+
 const resolvers = {
     Query: {
-        getUpcomingMovies: (args: GetMovieArgs) => MoviesResolvers().getUpcomingMovies(args)
+        getUpcomingMovies: (parent: any, { args }: Args) => MoviesResolvers().getUpcomingMovies(args)
     }
 }
 
