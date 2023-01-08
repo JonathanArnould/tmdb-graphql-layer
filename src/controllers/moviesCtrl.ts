@@ -1,8 +1,8 @@
 import { MoviesService } from "../services";
-import { GetMovieArgs } from "../typescript/getMovieTypes"
+import { GetMovieDetailsArgs, GetUpcomingMoviesArgs } from "../typescript/getMoviesTypes"
 
 const MoviesCtrl = () => {
-    const getUpcomingMovies = async (args?: GetMovieArgs) => {
+    const getUpcomingMovies = async (args: GetUpcomingMoviesArgs) => {
         try {
             const upcomingMoviesResult = await MoviesService().getUpcomingMovies(args);
             return {
@@ -17,8 +17,24 @@ const MoviesCtrl = () => {
         }
     }
 
+    const getMovieDetails = async (args: GetMovieDetailsArgs) => {
+        try {
+            const movieDetailsResult = await MoviesService().getMovieDetails(args);
+            return {
+                success: true,
+                movieDetails: movieDetailsResult
+            }
+        } catch (error) {
+            return {
+                success: false,
+                error
+            }
+        }
+    }
+
     return {
-        getUpcomingMovies
+        getUpcomingMovies,
+        getMovieDetails
     }
 }
 
