@@ -1,4 +1,4 @@
-export type GetMovieArgs = {
+export type GetUpcomingMoviesArgs = {
     page: string;
 }
 
@@ -32,4 +32,8 @@ export type UpcomingMoviesPaginate = {
     dates: UpcomingMoviesDates
     total_pages: number
     total_results: number
+}
+
+export type GetMovieDetailsArgs = {
+    id: string;
 }

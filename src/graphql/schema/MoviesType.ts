@@ -23,7 +23,7 @@ const MoviesType = gql`
         name: String
     }
 
-    type MovieDetail {
+    type MovieDetails {
         adult: Boolean
         backdrop_path: String
         budget: Int
@@ -86,12 +86,18 @@ const MoviesType = gql`
         movies: UpcomingMoviesPaginate
     }
 
-    input Args {
-        page: String
+    type MovieDetailsResult {
+        succes: Boolean
+        error: String
+        movieDetails: MovieDetails
     }
 
+    input ArgsUpcomingMovies { page: String }
+    input ArgsMovieDetails { id: String }
+
     type Query {
-        getUpcomingMovies(args: Args): UpcomingMovies!
+        getUpcomingMovies(args: ArgsUpcomingMovies): UpcomingMovies!
+        getMovieDetails(args: ArgsMovieDetails): MovieDetailsResult!
     }`
 
 export default MoviesType;
