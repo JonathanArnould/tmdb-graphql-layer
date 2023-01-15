@@ -3,10 +3,10 @@ const { TMDB_BASE_URL, TMDB_API_KEY, LANGUAGE, REGION } = process.env;
 const language = LANGUAGE || 'fr-FR';
 const region = REGION || 'FR';
 
-const URLParams = [['language', language], ['region', region]];
+const URLParams = new URLSearchParams([['language', language], ['region', region]]);
 
 const setURLParams = (arrayParams: RequestParams[] | []) => {
-  arrayParams.forEach((param: RequestParams) => URLParams.push([param.key, param.value]))
+  arrayParams.forEach((param: RequestParams) => URLParams.append(param.key, param.value))
   return URLParams;
 }
 
@@ -17,6 +17,6 @@ export const getRequestTmdb = (uri: string, params: RequestParams[] = []) => {
         method: "GET",
         url: `${TMDB_BASE_URL}${uri}`,
         headers: { 'Authorization': `Bearer ${TMDB_API_KEY}` },
-        params: new URLSearchParams(setURLParams(params))
+        params: setURLParams(params)
     }
 } 

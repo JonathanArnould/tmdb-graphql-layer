@@ -5,16 +5,16 @@ import mongoose from 'mongoose';
 import type { ServerConfig } from './_config/server-config';
 import { ApolloServerPluginLandingPageDisabled, ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 import resolvers from './graphql/resolvers/index';
-import MoviesType from './graphql/schema/MoviesType';
+import { buildSchema } from 'type-graphql';
 
 dotenv.config();
 
 export default async function startServer(
   config: ServerConfig,
 ): Promise<ApolloServer> {
+  const schema = await buildSchema({ resolvers, validate: false })
   const server = new ApolloServer({
-    typeDefs: MoviesType,
-    resolvers,
+    schema,
     plugins: [
     // Install a landing page plugin based on NODE_ENV
     process.env.SERVER_STAGE === 'prod'

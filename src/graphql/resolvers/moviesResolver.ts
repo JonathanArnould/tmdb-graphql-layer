@@ -1,19 +1,18 @@
+import { Args, Query, Resolver } from "type-graphql";
 import { MoviesCtrl } from "../../controllers";
-import { GetMovieDetailsArgs, GetUpcomingMoviesArgs } from "../../typescript/getMoviesTypes"
+import { GetUpcomingMoviesArgsObj, UpcomingMovies } from "../../types/getMoviesTypes";
+import { GetMovieDetailsArgs, MovieDetailsResult } from "../../types/movieDetailsType";
 
-const MoviesResolvers = () => {
-    const getUpcomingMovies = async (args: GetUpcomingMoviesArgs) => {
+@Resolver()
+export default class MoviesResolvers {
+    @Query(() => UpcomingMovies)
+    async getUpcomingMovies (@Args(type => GetUpcomingMoviesArgsObj) { args }: GetUpcomingMoviesArgsObj ) {
         return await MoviesCtrl().getUpcomingMovies(args);
     };
 
-    const getMovieDetails = async (args: GetMovieDetailsArgs) => {
-        return await MoviesCtrl().getMovieDetails(args);
-    }
-
-    return { 
-        getUpcomingMovies,
-        getMovieDetails
+    
+    @Query(() => MovieDetailsResult)
+    async getMovieDetails (@Args() { id }: GetMovieDetailsArgs) {
+        return await MoviesCtrl().getMovieDetails(id);
     }
 };
-
-export default MoviesResolvers;

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { getRequestTmdb } from './lib/buildTmdbRequest';
-import { GetUpcomingMoviesArgs, UpcomingMoviesPaginate, GetMovieDetailsArgs } from '../typescript/getMoviesTypes';
+import { MovieDetails } from '../types/movieDetailsType';
+import { GetUpcomingMoviesArgs, UpcomingMoviesPaginate } from '../types/getMoviesTypes';
 
 const MoviesService = () => {
     const getUpcomingMovies = async (args: GetUpcomingMoviesArgs): Promise<UpcomingMoviesPaginate> => {
@@ -11,9 +12,7 @@ const MoviesService = () => {
         return movies.data;
     }
 
-    const getMovieDetails = async (args: GetMovieDetailsArgs ) => {
-        const { id } = args;
-        
+    const getMovieDetails = async (id: string ): Promise<MovieDetails> => {
         const REQUEST = getRequestTmdb(`/movie/${id}`);
         const movie = await axios(REQUEST);
         return movie.data;

@@ -1,11 +1,17 @@
 import { ObjectType } from "type-graphql";
-import { Field, InputType } from "type-graphql/dist/decorators";
+import { ArgsType, Field, InputType } from "type-graphql/dist/decorators";
 import { Float, ID, Int } from "type-graphql/dist/scalars";
 
-@InputType({ description: 'Arguments to get a specific page in movies pagination'})
+@InputType()
 export class GetUpcomingMoviesArgs {
     @Field(type => String)
-    page?: string;
+    page!: string;
+}
+
+@ArgsType()
+export class GetUpcomingMoviesArgsObj {
+    @Field(type => GetUpcomingMoviesArgs)
+    args!: GetUpcomingMoviesArgs;
 }
 
 @ObjectType({ description: "Model for request criteria by minimum/maximum dates" })
